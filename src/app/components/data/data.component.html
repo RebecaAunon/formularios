@@ -1,14 +1,15 @@
 <h4>Formularios <small>data</small></h4>
 <hr>
-<form [formGroup]="forma" (ngSubmit)="guardarCambios()" novalidate="novalidate">
+<form [formGroup]="forma" (ngSubmit)="guardarCambios()">
 
-    <div>
-
-        <div class="form-group row">
+    <div formGroupName="nombrecompleto">
+        <div class="form-group row" [ngClass]="{'has-danger': !forma.controls['nombrecompleto'].controls['nombre'].valid}">
             <label class="col-2 col-form-label">Nombre</label>
             <div class="col-8">
 
-                <input class="form-control" type="text" placeholder="Nombre">
+                <input class="form-control" type="text" placeholder="Nombre" formControlName="nombre">
+                <div *ngIf="forma.get('nombrecompleto.nombre').errors?.required" class="form-control-feedback">El nombre es necesario.</div>
+                <div *ngIf="forma.get('nombrecompleto.nombre').errors?.minlength" class="form-control-feedback">Por lo menos 3 caracteres.</div>
             </div>
         </div>
 
@@ -16,7 +17,7 @@
             <label class="col-2 col-form-label">Apellido</label>
             <div class="col-8">
 
-                <input class="form-control" type="text" placeholder="Apellido">
+                <input class="form-control" type="text" placeholder="Apellido" formControlName="apellido">
             </div>
         </div>
 
@@ -26,7 +27,7 @@
         <label class="col-2 col-form-label">Correo</label>
         <div class="col-md-8">
 
-            <input class="form-control" type="email" placeholder="Correo electrónico">
+            <input class="form-control" type="email" placeholder="Correo electrónico" formControlName="correo">
         </div>
     </div>
 
@@ -40,5 +41,5 @@
       </button>
         </div>
     </div>
-
+    {{forma.valid}}
 </form>
